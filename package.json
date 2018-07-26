@@ -1,5 +1,5 @@
 {
-  "name": "nodefirebasescrypt",
+  "name": "firebase-scrypt",
   "version": "1.0.0",
   "description": "Nodejs implementation of Firebase's Scrypt modified version.",
   "main": "index.js",
@@ -16,7 +16,7 @@
     "firebase",
     "scrypt"
   ],
-  "author": "Guillaume Gautier <xwlmn77@gmail.com>",
+  "author": "Seaver Team <contact@seaverhorse.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://gitlab.com/seaverhorse/nodeFirebaseScrypt/issues"
