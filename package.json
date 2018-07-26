@@ -1,0 +1,25 @@
+{
+  "name": "nodefirebasescrypt",
+  "version": "1.0.0",
+  "description": "Nodejs implementation of Firebase's Scrypt modified version.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/seaverhorse/nodeFirebaseScrypt.git"
+  },
+  "keywords": [
+    "nodejs",
+    "node",
+    "firebase",
+    "scrypt"
+  ],
+  "author": "Guillaume Gautier <xwlmn77@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/seaverhorse/nodeFirebaseScrypt/issues"
+  },
+  "homepage": "https://gitlab.com/seaverhorse/nodeFirebaseScrypt#README"
+}
