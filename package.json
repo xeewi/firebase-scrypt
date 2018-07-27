@@ -12,7 +12,7 @@
     "lint:fix": "npm run lint -- --fix",
     "test": "jest src",
     "test:watch": "jest src --watch",
-    "test:coverage": "jest --coverage",
+    "test:coverage": "jest src --coverage",
     "test:coverage:open": "opn ./coverage/lcov-report/index.html",
     "validate": "npm run lint; npm run test && npm outdated --depth 0"
   },

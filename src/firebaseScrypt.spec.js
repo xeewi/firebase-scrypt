@@ -6,6 +6,9 @@ const firebaseConfigMock = {
   saltSeparator: 'separator',
   signerKey: 'superlongkey',
 }
+const passwordMock = 'test'
+const saltMock = 'salt'
+const hashMock = 'PrZI5nfqjOEk'
 
 const scrypt = FirebaseScrypt.init(firebaseConfigMock)
 
@@ -20,6 +23,18 @@ describe('FirebaseScrypt', () => {
       expect(scrypt.signerKey).toBe(firebaseConfigMock.signerKey)
       expect(scrypt.rounds).toBe(firebaseConfigMock.rounds)
       expect(scrypt.saltSeparator).toBe(firebaseConfigMock.saltSeparator)
+    })
+  })
+
+  describe('Functions', () => {
+    test('Hash password', () => {
+      scrypt.hash(passwordMock, saltMock)
+        .then(hash => expect(hash).toBe(hashMock))
+    })
+
+    test('Verify hash', () => {
+      scrypt.verify(passwordMock, saltMock, hashMock)
+        .then(isValid => expect(isValid).toBe(true))
     })
   })
 })
