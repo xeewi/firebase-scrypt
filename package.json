@@ -1,8 +1,8 @@
 {
   "name": "firebase-scrypt",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Nodejs implementation of Firebase's Scrypt modified version.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "install": "sh install.sh && npm run build",
     "clean": "rm -rf dist && mkdir dist",
