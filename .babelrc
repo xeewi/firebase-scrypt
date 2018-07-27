@@ -1,0 +1,25 @@
+{
+  "presets": [
+    [
+      "env",
+      {
+        "targets": {
+          "node": "current"
+        }
+      }
+    ]
+  ],
+  "plugins": [
+    [
+      "babel-plugin-transform-builtin-extend",
+      {
+        "globals": [
+          "Error",
+          "Array"
+        ]
+      }
+    ],
+    "transform-runtime",
+    "transform-object-rest-spread"
+  ]
+}

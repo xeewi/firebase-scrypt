@@ -4,7 +4,17 @@
   "description": "Nodejs implementation of Firebase's Scrypt modified version.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "install": "sh install.sh && npm run build",
+    "clean": "rm -rf dist && mkdir dist",
+    "build-dist": "babel src --out-dir dist",
+    "build": "npm run clean && npm run build-dist",
+    "lint": "eslint src config",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "jest src",
+    "test:watch": "jest src --watch",
+    "test:coverage": "jest --coverage",
+    "test:coverage:open": "opn ./coverage/lcov-report/index.html",
+    "validate": "npm run lint; npm run test && npm outdated --depth 0"
   },
   "repository": {
     "type": "git",
@@ -21,5 +31,25 @@
   "bugs": {
     "url": "https://gitlab.com/seaverhorse/nodeFirebaseScrypt/issues"
   },
-  "homepage": "https://gitlab.com/seaverhorse/nodeFirebaseScrypt#README"
+  "homepage": "https://gitlab.com/seaverhorse/nodeFirebaseScrypt#README",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.0.3",
+    "babel-plugin-transform-builtin-extend": "^1.1.2",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.6.1",
+    "eslint-config-esnext": "^2.0.0",
+    "eslint-config-recommended": "^2.0.0",
+    "eslint-config-standard": "^11.0.0-beta.0",
+    "eslint-plugin-babel": "^4.1.2",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "eslint": "^4.13.1",
+    "jest": "^21.2.1",
+    "nodemon": "^1.12.6",
+    "opn-cli": "^3.1.0"
+  }
 }

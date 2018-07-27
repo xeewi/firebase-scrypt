@@ -1,0 +1,83 @@
+{
+  "env": {
+    "es6": true,
+    "node": true,
+    "jest": true
+  },
+  "plugins": [
+    "node",
+    "promise"
+  ],
+  "extends": [
+    "recommended/node",
+    "recommended/node/style-guide",
+    "standard"
+  ],
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 8
+  },
+  "rules": {
+    "comma-dangle": [
+      "error",
+      {
+        "arrays": "always-multiline",
+        "objects": "always-multiline",
+        "imports": "always-multiline",
+        "exports": "always-multiline",
+        "functions": "always-multiline"
+      }
+    ],
+    "default-case": "error",
+    "import/extensions": {
+      "js": "always",
+      "json": "always"
+    },
+    "import/prefer-default-export": 0,
+    "import/no-namespace": 0,
+    "import/no-nodejs-modules": 0,
+    "import/namespace": 0,
+    "indent": [
+      "error",
+      2
+    ],
+    "keyword-spacing": "error",
+    "linebreak-style": [
+      "error",
+      "unix"
+    ],
+    "max-len": [
+      "error",
+      {
+        "code": 140,
+        "ignoreRegExpLiterals": true,
+        "ignoreUrls": true
+      }
+    ],
+    "no-console": 0,
+    "no-invalid-this": "error",
+    "no-return-await": "error",
+    "no-var": "error",
+    "object-curly-newline": [
+      "error",
+      {
+        "multiline": true,
+        "consistent": true
+      }
+    ],
+    "prefer-arrow-callback": "error",
+    "prefer-const": [
+      "error",
+      {
+        "destructuring": "all"
+      }
+    ],
+    "prefer-rest-params": "error",
+    "prefer-spread": "error",
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "sort-imports": 0
+  }
+}
