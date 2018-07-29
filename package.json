@@ -1,20 +1,21 @@
 {
   "name": "firebase-scrypt",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Nodejs implementation of Firebase's Scrypt modified version.",
   "main": "dist/firebaseScrypt.js",
   "scripts": {
     "install": "sh install.sh && npm run build",
     "clean": "rm -rf dist && mkdir dist",
     "build-dist": "babel src --out-dir dist",
-    "build": "npm run clean && npm run build-dist",
+    "build": "npm run clean && npm run build-dist && npm run generate-def",
     "lint": "eslint src config",
     "lint:fix": "npm run lint -- --fix",
     "test": "jest src",
     "test:watch": "jest src --watch",
     "test:coverage": "jest src --coverage",
     "test:coverage:open": "opn ./coverage/lcov-report/index.html",
-    "validate": "npm run lint; npm run test && npm outdated --depth 0"
+    "validate": "npm run lint; npm run test && npm outdated --depth 0",
+    "generate-def": "dts-gen --expression-file dist/firebaseScrypt.js -f dist/firebaseScrypt.d.ts -o"
   },
   "repository": {
     "type": "git",
@@ -50,6 +51,7 @@
     "eslint": "^4.13.1",
     "jest": "^21.2.1",
     "nodemon": "^1.12.6",
-    "opn-cli": "^3.1.0"
+    "opn-cli": "^3.1.0",
+    "dts-gen": "^0.5.7"
   }
 }
