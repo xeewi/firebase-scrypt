@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/seaverhorse/nodeFirebaseScrypt.git"
+    "url": "git+https://github.com/xeewi/firebase-scrypt.git"
   },
   "keywords": [
     "nodejs",
@@ -27,12 +27,12 @@
     "firebase",
     "scrypt"
   ],
-  "author": "Seaver Team <contact@seaverhorse.com>",
-  "license": "ISC",
+  "author": "Guillaume Gautier <guillaume.gautier@eemi.com>",
+  "license": "MIT",
   "bugs": {
-    "url": "https://gitlab.com/seaverhorse/nodeFirebaseScrypt/issues"
+    "url": "https://github.com/xeewi/firebase-scrypt/issues"
   },
-  "homepage": "https://gitlab.com/seaverhorse/nodeFirebaseScrypt#README",
+  "homepage": "https://github.com/xeewi/firebase-scrypt#README",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.0.3",
