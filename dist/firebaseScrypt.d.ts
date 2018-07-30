@@ -7,8 +7,6 @@ declare class firebaseScrypt {
 
     verify(...args: any[]): void;
 
-    static init(...args: any[]): void;
-
 }
 
 

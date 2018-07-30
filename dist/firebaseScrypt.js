@@ -14,19 +14,6 @@ var _child_process = require('child_process');
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 class FirebaseScrypt {
-  /**
-   * init - Init module
-   * @param {object} firebaseHashConfig Hash config from firebase
-   * @param {number} firebaseHashConfig.memCost Memory cost
-   * @param {number} firebaseHashConfig.rounds Hash rounds
-   * @param {string} firebaseHashConfig.saltSeparator Salt separator
-   * @param {string} firebaseHashConfig.signerKey Signer key
-   * @returns {FirebaseScrypt} FirebaseScrypt object
-   */
-  static init(firebaseHashConfig) {
-    return new FirebaseScrypt(firebaseHashConfig);
-  }
-
   constructor({ memCost, rounds, saltSeparator, signerKey }) {
     this.memCost = memCost;
     this.rounds = rounds;
@@ -42,7 +29,7 @@ class FirebaseScrypt {
    */
   hash(password, salt) {
     return new _promise2.default((resolve, reject) => {
-      (0, _child_process.exec)(`echo "${password}" | ../scrypt/scrypt "${this.signerKey}" "${salt}" "${this.saltSeparator}" "${this.rounds}" "${this.memCost}" -P`, (error, stdout) => error ? reject(error) : resolve(stdout));
+      (0, _child_process.exec)(`${__dirname}/../scrypt/scrypt "${this.signerKey}" "${salt}" "${this.saltSeparator}" "${this.rounds}" "${this.memCost}" -P <<< "${password}"`, { shell: '/bin/bash' }, (error, stdout) => error ? reject(error) : resolve(stdout));
     });
   }
 

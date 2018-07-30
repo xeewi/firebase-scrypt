@@ -36,7 +36,7 @@ const firebaseParameter = {
   signerKey: 'your-key', // replace by your
 }
 
-const scrypt = FirebaseScrypt.init(firebaseParameters)
+const scrypt = new FirebaseScrypt(firebaseParameters)
 
 ```
 
