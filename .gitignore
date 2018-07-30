@@ -2,7 +2,6 @@
 .DS_Store
 .vscode/
 package-lock.json
-dist
 uploads/
 
 # Logs

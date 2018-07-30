@@ -1,6 +1,15 @@
 import { exec } from 'child_process'
 
 export class FirebaseScrypt {
+  /**
+   * init - Init module
+   * @param {object} firebaseHashConfig Hash config from firebase
+   * @param {number} firebaseHashConfig.memCost Memory cost
+   * @param {number} firebaseHashConfig.rounds Hash rounds
+   * @param {string} firebaseHashConfig.saltSeparator Salt separator
+   * @param {string} firebaseHashConfig.signerKey Signer key
+   * @returns {FirebaseScrypt} FirebaseScrypt object
+   */
   static init (firebaseHashConfig) {
     return new FirebaseScrypt(firebaseHashConfig)
   }

@@ -1,0 +1,40 @@
+'use strict';
+
+var _firebaseScrypt = require('./firebaseScrypt');
+
+const firebaseConfigMock = {
+  memCost: 1,
+  rounds: 1,
+  saltSeparator: 'separator',
+  signerKey: 'superlongkey'
+};
+const passwordMock = 'test';
+const saltMock = 'salt';
+const hashMock = 'PrZI5nfqjOEk';
+
+const scrypt = _firebaseScrypt.FirebaseScrypt.init(firebaseConfigMock);
+
+describe('FirebaseScrypt', () => {
+  describe('Initialisation', () => {
+    test('Should return a FirebaseScrypt Object', () => {
+      expect(scrypt instanceof _firebaseScrypt.FirebaseScrypt).toBe(true);
+    });
+
+    test('Should set configuration', () => {
+      expect(scrypt.memCost).toBe(firebaseConfigMock.memCost);
+      expect(scrypt.signerKey).toBe(firebaseConfigMock.signerKey);
+      expect(scrypt.rounds).toBe(firebaseConfigMock.rounds);
+      expect(scrypt.saltSeparator).toBe(firebaseConfigMock.saltSeparator);
+    });
+  });
+
+  describe('Functions', () => {
+    test('Hash password', () => {
+      scrypt.hash(passwordMock, saltMock).then(hash => expect(hash).toBe(hashMock));
+    });
+
+    test('Verify hash', () => {
+      scrypt.verify(passwordMock, saltMock, hashMock).then(isValid => expect(isValid).toBe(true));
+    });
+  });
+});
