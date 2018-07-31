@@ -21,6 +21,7 @@ class FirebaseScrypt {
     this.signerKey = signerKey;
   }
 
+  /* eslint-disable max-len */
   /**
    * hash - Hash password
    * @param {string} password Password string
@@ -32,6 +33,7 @@ class FirebaseScrypt {
       (0, _child_process.exec)(`${__dirname}/../scrypt/scrypt "${this.signerKey}" "${salt}" "${this.saltSeparator}" "${this.rounds}" "${this.memCost}" -P <<< "${password}"`, { shell: '/bin/bash' }, (error, stdout) => error ? reject(error) : resolve(stdout));
     });
   }
+  /* eslint-enable max-len */
 
   /**
    * verify - Verify if password is equal to hash

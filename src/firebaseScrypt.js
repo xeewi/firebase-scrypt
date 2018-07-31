@@ -8,6 +8,7 @@ export class FirebaseScrypt {
     this.signerKey = signerKey
   }
 
+  /* eslint-disable max-len */
   /**
    * hash - Hash password
    * @param {string} password Password string
@@ -23,6 +24,7 @@ export class FirebaseScrypt {
       )
     })
   }
+  /* eslint-enable max-len */
 
   /**
    * verify - Verify if password is equal to hash
