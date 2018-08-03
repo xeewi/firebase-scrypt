@@ -2,6 +2,10 @@
 
 NodeJs implementation of Firebase's Scrypt modified version
 
+## Warning
+
+This module work only with users exported with Firebase Tools CLI and the command `auth:export`. Others way to gets users (Admin SDK, etc.) will give you an incompatible hash.
+
 ## Table of Contents
 
 - [Install](#install)
