@@ -33,6 +33,9 @@
     "url": "https://github.com/xeewi/firebase-scrypt/issues"
   },
   "homepage": "https://github.com/xeewi/firebase-scrypt#README",
+  "dependencies": {
+    "babel-runtime": "^6.26.0"
+  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.0.3",
