@@ -31,7 +31,7 @@ To access these parameters, navigate to the 'Users' tab of the 'Authentication' 
 ### Initialisation
 
 ```javascript
-import { FirebaseScrypt } from 'firebase-script'
+import { FirebaseScrypt } from 'firebase-scrypt'
 
 const firebaseParameter = {
   memCost: 1, // replace by your
