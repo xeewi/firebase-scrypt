@@ -10,12 +10,12 @@ const passwordMock = 'test'
 const saltMock = 'salt'
 const hashMock = 'PrZI5nfqjOEk'
 
-const scrypt = FirebaseScrypt.init(firebaseConfigMock)
+const scrypt = new FirebaseScrypt(firebaseConfigMock)
 
 describe('FirebaseScrypt', () => {
   describe('Initialisation', () => {
     test('Should return a FirebaseScrypt Object', () => {
-      expect(scrypt instanceof FirebaseScrypt).toBe(true)
+      expect(scrypt).toBeInstanceOf(FirebaseScrypt)
     })
 
     test('Should set configuration', () => {
@@ -27,14 +27,16 @@ describe('FirebaseScrypt', () => {
   })
 
   describe('Functions', () => {
-    test('Hash password', () => {
-      scrypt.hash(passwordMock, saltMock)
-        .then(hash => expect(hash).toBe(hashMock))
-    })
+    test('Hash password', () => scrypt.hash(passwordMock, saltMock)
+      .then(hash => expect(hash).toBe(hashMock)))
 
-    test('Verify hash', () => {
-      scrypt.verify(passwordMock, saltMock, hashMock)
-        .then(isValid => expect(isValid).toBe(true))
-    })
+    test('Verify hash', () => scrypt.verify(passwordMock, saltMock, hashMock)
+      .then(isValid => expect(isValid).toBe(true)))
+
+    test('Verify hash mismatch (wrong password)', () => scrypt.verify('wrong mock', saltMock, hashMock)
+      .then(isValid => expect(isValid).toBe(false)))
+
+    test('Verify hash mismatch (wrong hash length)', () => scrypt.verify(passwordMock, saltMock, 'YQ==')
+      .then(isValid => expect(isValid).toBe(false)))
   })
 })
