@@ -1,6 +1,6 @@
 {
   "name": "firebase-scrypt",
-  "version": "1.0.8",
+  "version": "2.0.0",
   "description": "Nodejs implementation of Firebase's Scrypt modified version.",
   "main": "dist/firebaseScrypt.js",
   "scripts": {
@@ -56,7 +56,7 @@
     "opn-cli": "^3.1.0",
     "dts-gen": "^0.5.7"
   },
-  "engines" : {
-      "node" : ">= 10"
+  "engines": {
+    "node": ">= 10"
   }
 }
