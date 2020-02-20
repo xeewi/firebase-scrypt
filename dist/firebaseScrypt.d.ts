@@ -9,14 +9,3 @@ declare class firebaseScrypt {
 
 }
 
-
-declare namespace firebaseScrypt {
-    namespace prototype {
-        function hash(...args: any[]): void;
-
-        function verify(...args: any[]): void;
-
-    }
-
-}
-

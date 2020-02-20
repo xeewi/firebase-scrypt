@@ -4,7 +4,6 @@
   "description": "Nodejs implementation of Firebase's Scrypt modified version.",
   "main": "dist/firebaseScrypt.js",
   "scripts": {
-    "install": "sh install.sh",
     "clean": "rm -rf dist && mkdir dist",
     "build-dist": "babel src --out-dir dist",
     "build": "npm run clean && npm run build-dist && npm run generate-def",
@@ -56,5 +55,8 @@
     "nodemon": "^1.12.6",
     "opn-cli": "^3.1.0",
     "dts-gen": "^0.5.7"
+  },
+  "engines" : {
+      "node" : ">= 10"
   }
 }
