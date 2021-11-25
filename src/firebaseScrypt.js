@@ -49,6 +49,31 @@ function base64decode (encoded) {
  */
 export class FirebaseScrypt {
   constructor ({ memCost, rounds, saltSeparator, signerKey }) {
+    if (memCost === undefined) {
+      throw new Error('Error constructing FirebaseScrypt instance: memCost parameter missing')
+    }
+    if (typeof memCost !== 'number') {
+      throw new Error('Error constructing FirebaseScrypt instance: memCost parameter must be a number')
+    }
+    if (rounds === undefined) {
+      throw new Error('Error constructing FirebaseScrypt instance: rounds parameter missing')
+    }
+    if (typeof rounds !== 'number') {
+      throw new Error('Error constructing FirebaseScrypt instance: rounds parameter must be a number')
+    }
+    if (saltSeparator === undefined) {
+      throw new Error('Error constructing FirebaseScrypt instance: saltSeparator parameter missing')
+    }
+    if (typeof saltSeparator !== 'string') {
+      throw new Error('Error constructing FirebaseScrypt instance: saltSeparator parameter must be a base64 encoded string')
+    }
+    if (signerKey === undefined) {
+      throw new Error('Error constructing FirebaseScrypt instance: signerKey parameter missing')
+    }
+    if (typeof signerKey !== 'string') {
+      throw new Error('Error constructing FirebaseScrypt instance: signerKey parameter must be a base64 encoded string')
+    }
+
     this.memCost = memCost
     this.rounds = rounds
     this.saltSeparator = saltSeparator
@@ -62,6 +87,9 @@ export class FirebaseScrypt {
    * @returns {string} Password hash
    */
   hash (password, salt) {
+    if (!password) throw new Error('Error hashing password: password parameter missing')
+    if (!salt) throw new Error('Error hashing password: salt parameter missing')
+
     return new Promise((resolve, reject) => {
       const bSalt = Buffer.concat([
         base64decode(salt),
@@ -96,6 +124,10 @@ export class FirebaseScrypt {
    * @returns {boolean} isValid
    */
   verify (password, salt, hash) {
+    if (!password) throw new Error('Error verifying password: password parameter missing')
+    if (!salt) throw new Error('Error verifying password: salt parameter missing')
+    if (!hash) throw new Error('Error verifying password: hash parameter missing')
+
     return this.hash(password, salt).then(generatedHash => {
       const knownHash = base64decode(hash)
       const bGeneratedHash = base64decode(generatedHash)
