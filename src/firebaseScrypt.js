@@ -9,6 +9,27 @@ const IV_LENGTH = 16
 const KEYLEN = 256 / 8
 
 /**
+ * base64decode - Decodes a base64 encoded string into a Buffer
+ *
+ * The hashes exported via the firebase CLI's auth:export command use the
+ * standard base64 alphabet with + and / being used in addition to the 62
+ * alphanumeric characters.
+ *
+ * The hashes exported via the Admin SDK's
+ * listUsers command use the URL safe base64 alphabet which uses - and _
+ * instead.
+ *
+ * This function allows this library to be compatible with hashes in either
+ * format.
+ *
+ * @param {string} encoded Base64 encoded string
+ * @returns {Buffer} decoded
+ */
+function base64decode (encoded) {
+  return Buffer.from(encoded.replace(/-/g, '+').replace(/_/g, '/'), 'base64')
+}
+
+/**
  * From https://github.com/firebase/scrypt/issues/2#issuecomment-548203625
  * 1. Decrypt the User's salt, and Project's base64_signer_key and
  *    base64_salt_separator from base64
@@ -43,8 +64,8 @@ export class FirebaseScrypt {
   hash (password, salt) {
     return new Promise((resolve, reject) => {
       const bSalt = Buffer.concat([
-        Buffer.from(salt, 'base64'),
-        Buffer.from(this.saltSeparator, 'base64'),
+        base64decode(salt),
+        base64decode(this.saltSeparator),
       ])
       const iv = Buffer.alloc(IV_LENGTH, 0)
 
@@ -59,7 +80,7 @@ export class FirebaseScrypt {
 
         try {
           const cipher = createCipheriv(ALGORITHM, derivedKey, iv)
-          resolve(Buffer.concat([ cipher.update(Buffer.from(this.signerKey, 'base64')), cipher.final() ]).toString('base64'))
+          resolve(Buffer.concat([ cipher.update(base64decode(this.signerKey)), cipher.final() ]).toString('base64'))
         } catch (error) {
           reject(error)
         }
@@ -76,8 +97,8 @@ export class FirebaseScrypt {
    */
   verify (password, salt, hash) {
     return this.hash(password, salt).then(generatedHash => {
-      const knownHash = Buffer.from(hash, 'base64')
-      const bGeneratedHash = Buffer.from(generatedHash, 'base64')
+      const knownHash = base64decode(hash)
+      const bGeneratedHash = base64decode(generatedHash)
       if (bGeneratedHash.length !== knownHash.length) {
         // timingSafeEqual throws when buffer lengths don't match
         timingSafeEqual(knownHash, knownHash)
