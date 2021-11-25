@@ -9,6 +9,27 @@ const IV_LENGTH = 16
 const KEYLEN = 256 / 8
 
 /**
+ * base64decode - Decodes a base64 encoded string into a Buffer
+ *
+ * The hashes exported via the firebase CLI's auth:export command use the
+ * standard base64 alphabet with + and / being used in addition to the 62
+ * alphanumeric characters.
+ *
+ * The hashes exported via the Admin SDK's
+ * listUsers command use the URL safe base64 alphabet which uses - and _
+ * instead.
+ *
+ * This function allows this library to be compatible with hashes in either
+ * format.
+ *
+ * @param {string} encoded Base64 encoded string
+ * @returns {Buffer} decoded
+ */
+function base64decode (encoded) {
+  return Buffer.from(encoded.replace(/-/g, '+').replace(/_/g, '/'), 'base64')
+}
+
+/**
  * From https://github.com/firebase/scrypt/issues/2#issuecomment-548203625
  * 1. Decrypt the User's salt, and Project's base64_signer_key and
  *    base64_salt_separator from base64
@@ -28,6 +49,31 @@ const KEYLEN = 256 / 8
  */
 export class FirebaseScrypt {
   constructor ({ memCost, rounds, saltSeparator, signerKey }) {
+    if (memCost === undefined) {
+      throw new Error('Error constructing FirebaseScrypt instance: memCost parameter missing')
+    }
+    if (typeof memCost !== 'number') {
+      throw new Error('Error constructing FirebaseScrypt instance: memCost parameter must be a number')
+    }
+    if (rounds === undefined) {
+      throw new Error('Error constructing FirebaseScrypt instance: rounds parameter missing')
+    }
+    if (typeof rounds !== 'number') {
+      throw new Error('Error constructing FirebaseScrypt instance: rounds parameter must be a number')
+    }
+    if (saltSeparator === undefined) {
+      throw new Error('Error constructing FirebaseScrypt instance: saltSeparator parameter missing')
+    }
+    if (typeof saltSeparator !== 'string') {
+      throw new Error('Error constructing FirebaseScrypt instance: saltSeparator parameter must be a base64 encoded string')
+    }
+    if (signerKey === undefined) {
+      throw new Error('Error constructing FirebaseScrypt instance: signerKey parameter missing')
+    }
+    if (typeof signerKey !== 'string') {
+      throw new Error('Error constructing FirebaseScrypt instance: signerKey parameter must be a base64 encoded string')
+    }
+
     this.memCost = memCost
     this.rounds = rounds
     this.saltSeparator = saltSeparator
@@ -41,10 +87,13 @@ export class FirebaseScrypt {
    * @returns {string} Password hash
    */
   hash (password, salt) {
+    if (!password) throw new Error('Error hashing password: password parameter missing')
+    if (!salt) throw new Error('Error hashing password: salt parameter missing')
+
     return new Promise((resolve, reject) => {
       const bSalt = Buffer.concat([
-        Buffer.from(salt, 'base64'),
-        Buffer.from(this.saltSeparator, 'base64'),
+        base64decode(salt),
+        base64decode(this.saltSeparator),
       ])
       const iv = Buffer.alloc(IV_LENGTH, 0)
 
@@ -59,7 +108,7 @@ export class FirebaseScrypt {
 
         try {
           const cipher = createCipheriv(ALGORITHM, derivedKey, iv)
-          resolve(Buffer.concat([ cipher.update(Buffer.from(this.signerKey, 'base64')), cipher.final() ]).toString('base64'))
+          resolve(Buffer.concat([ cipher.update(base64decode(this.signerKey)), cipher.final() ]).toString('base64'))
         } catch (error) {
           reject(error)
         }
@@ -75,9 +124,13 @@ export class FirebaseScrypt {
    * @returns {boolean} isValid
    */
   verify (password, salt, hash) {
+    if (!password) throw new Error('Error verifying password: password parameter missing')
+    if (!salt) throw new Error('Error verifying password: salt parameter missing')
+    if (!hash) throw new Error('Error verifying password: hash parameter missing')
+
     return this.hash(password, salt).then(generatedHash => {
-      const knownHash = Buffer.from(hash, 'base64')
-      const bGeneratedHash = Buffer.from(generatedHash, 'base64')
+      const knownHash = base64decode(hash)
+      const bGeneratedHash = base64decode(generatedHash)
       if (bGeneratedHash.length !== knownHash.length) {
         // timingSafeEqual throws when buffer lengths don't match
         timingSafeEqual(knownHash, knownHash)
